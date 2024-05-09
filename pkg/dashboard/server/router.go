@@ -336,8 +336,7 @@ func combinedAuthorizer(next http.Handler) http.Handler {
 		agentAuth = jwtauth.New("HS256", []byte(dynamicConfig.JWTSecret), nil)
 
 		verifierFunc := jwtauth.Verifier(agentAuth)
-		authenticatorFunc := jwtauth.Authenticator
 
-		verifierFunc(authenticatorFunc(mustAgent(next))).ServeHTTP(w, r)
+		verifierFunc(mustAgent(next)).ServeHTTP(w, r)
 	})
 }
