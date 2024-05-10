@@ -1,7 +1,6 @@
 package gitops
 
 import (
-	"io/ioutil"
 	"os"
 	"strings"
 	"testing"
@@ -12,7 +11,7 @@ import (
 )
 
 func Test_guidingTextWithoutController(t *testing.T) {
-	dirToWrite, err := ioutil.TempDir("/tmp", "gimlet")
+	dirToWrite, err := os.MkdirTemp("/tmp", "gimlet")
 	defer os.RemoveAll(dirToWrite)
 	if err != nil {
 		t.Errorf("Cannot create directory")
@@ -62,7 +61,7 @@ func Test_guidingTextWithoutController(t *testing.T) {
 }
 
 func Test_guidingTextWithoutControllerAndSingleEnv(t *testing.T) {
-	dirToWrite, err := ioutil.TempDir("/tmp", "gimlet")
+	dirToWrite, err := os.MkdirTemp("/tmp", "gimlet")
 	defer os.RemoveAll(dirToWrite)
 	if err != nil {
 		t.Errorf("Cannot create directory")
@@ -112,7 +111,7 @@ func Test_guidingTextWithoutControllerAndSingleEnv(t *testing.T) {
 }
 
 func Test_guidingTextWithController(t *testing.T) {
-	dirToWrite, err := ioutil.TempDir("/tmp", "gimlet")
+	dirToWrite, err := os.MkdirTemp("/tmp", "gimlet")
 	defer os.RemoveAll(dirToWrite)
 	if err != nil {
 		t.Errorf("Cannot create directory")

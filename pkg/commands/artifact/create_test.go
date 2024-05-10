@@ -42,7 +42,7 @@ func Test_create(t *testing.T) {
 			t.Fatalf("Error running command: %s", err)
 		}
 
-		content, err := ioutil.ReadFile(fileToWrite.Name())
+		content, err := os.ReadFile(fileToWrite.Name())
 		if err != nil {
 			t.Fatalf("Error reading file: %s", err)
 		}

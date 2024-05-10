@@ -8,7 +8,6 @@ import (
 	"github.com/urfave/cli/v2"
 	"gopkg.in/yaml.v3"
 
-	"io/ioutil"
 	"os"
 	"strings"
 )
@@ -45,7 +44,7 @@ func templateCmd(c *cli.Context) error {
 	varsPath := c.String("vars")
 	vars := map[string]string{}
 	if varsPath != "" {
-		yamlString, err := ioutil.ReadFile(varsPath)
+		yamlString, err := os.ReadFile(varsPath)
 		if err != nil {
 			return fmt.Errorf("cannot read vars file: %s", err.Error())
 		}
@@ -66,7 +65,7 @@ func templateCmd(c *cli.Context) error {
 	var templatedManifests string
 
 	filePath := c.String("file")
-	fileContent, err := ioutil.ReadFile(filePath)
+	fileContent, err := os.ReadFile(filePath)
 	if err != nil {
 		return fmt.Errorf("cannot read file: %s", err.Error())
 	}
@@ -94,7 +93,7 @@ func templateCmd(c *cli.Context) error {
 
 	outputPath := c.String("output")
 	if outputPath != "" {
-		err := ioutil.WriteFile(outputPath, []byte(templatedManifests), 0666)
+		err := os.WriteFile(outputPath, []byte(templatedManifests), 0666)
 		if err != nil {
 			return fmt.Errorf("cannot write values file %s", err)
 		}

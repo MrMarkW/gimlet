@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"os"
 
 	"github.com/btubbs/datetime"
 	"github.com/gimlet-io/gimlet/pkg/dx"
@@ -146,7 +146,7 @@ func create(c *cli.Context) error {
 
 	outputPath := c.String("output")
 	if outputPath != "" {
-		err := ioutil.WriteFile(outputPath, jsonString.Bytes(), 0666)
+		err := os.WriteFile(outputPath, jsonString.Bytes(), 0666)
 		if err != nil {
 			return fmt.Errorf("cannot write artifact json %s", err)
 		}

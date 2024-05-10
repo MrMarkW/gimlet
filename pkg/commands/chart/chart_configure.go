@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"math/rand"
 	"net/http"
@@ -68,7 +67,7 @@ func configure(c *cli.Context) error {
 	existingValuesPath := c.String("file")
 	existingValuesJson := []byte("{}")
 	if existingValuesPath != "" {
-		yamlString, err := ioutil.ReadFile(existingValuesPath)
+		yamlString, err := os.ReadFile(existingValuesPath)
 		if err != nil {
 			return fmt.Errorf("cannot read values file")
 		}
@@ -87,14 +86,14 @@ func configure(c *cli.Context) error {
 
 	var debugSchema, debugUISchema string
 	if c.String("schema") != "" {
-		debugSchemaBytes, err := ioutil.ReadFile(c.String("schema"))
+		debugSchemaBytes, err := os.ReadFile(c.String("schema"))
 		if err != nil {
 			return fmt.Errorf("cannot read debugSchema file")
 		}
 		debugSchema = string(debugSchemaBytes)
 	}
 	if c.String("ui-schema") != "" {
-		debugUISchemaBytes, err := ioutil.ReadFile(c.String("ui-schema"))
+		debugUISchemaBytes, err := os.ReadFile(c.String("ui-schema"))
 		if err != nil {
 			return fmt.Errorf("cannot read debugUISchema file")
 		}
@@ -115,7 +114,7 @@ func configure(c *cli.Context) error {
 
 	outputPath := c.String("output")
 	if outputPath != "" {
-		err := ioutil.WriteFile(outputPath, yamlBytes, 0666)
+		err := os.WriteFile(outputPath, yamlBytes, 0666)
 		if err != nil {
 			return fmt.Errorf("cannot write values file %s", err)
 		}
@@ -177,7 +176,7 @@ func ConfigureChart(
 
 	port := randomPort()
 
-	workDir, err := ioutil.TempDir(os.TempDir(), "gimlet")
+	workDir, err := os.MkdirTemp(os.TempDir(), "gimlet")
 	if err != nil {
 		panic(err)
 	}
@@ -215,12 +214,12 @@ func removeTempFiles(workDir string) {
 }
 
 func writeTempFiles(workDir string, schema string, helmUISchema string, existingValues string) {
-	ioutil.WriteFile(filepath.Join(workDir, "values.schema.json"), []byte(schema), 0666)
-	ioutil.WriteFile(filepath.Join(workDir, "helm-ui.json"), []byte(helmUISchema), 0666)
-	ioutil.WriteFile(filepath.Join(workDir, "values.json"), []byte(existingValues), 0666)
-	ioutil.WriteFile(filepath.Join(workDir, "bundle.js"), bundleJs, 0666)
-	ioutil.WriteFile(filepath.Join(workDir, "bundle.js.LICENSE.txt"), licenseTxt, 0666)
-	ioutil.WriteFile(filepath.Join(workDir, "index.html"), indexHtml, 0666)
+	os.WriteFile(filepath.Join(workDir, "values.schema.json"), []byte(schema), 0666)
+	os.WriteFile(filepath.Join(workDir, "helm-ui.json"), []byte(helmUISchema), 0666)
+	os.WriteFile(filepath.Join(workDir, "values.json"), []byte(existingValues), 0666)
+	os.WriteFile(filepath.Join(workDir, "bundle.js"), bundleJs, 0666)
+	os.WriteFile(filepath.Join(workDir, "bundle.js.LICENSE.txt"), licenseTxt, 0666)
+	os.WriteFile(filepath.Join(workDir, "index.html"), indexHtml, 0666)
 }
 
 func setupRouter(workDir string, browserClosed chan int) *chi.Mux {

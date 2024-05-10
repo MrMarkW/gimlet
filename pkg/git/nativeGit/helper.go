@@ -27,7 +27,7 @@ func CloneToFs(rootPath string, repoName string, privateKeyPath string, gitSSHAd
 	if err != nil {
 		return "", nil, errors.WithMessage(err, "cannot create folder at $REPO_CACHE_PATH")
 	}
-	path, err := ioutil.TempDir(rootPath, "gitops-")
+	path, err := os.MkdirTemp(rootPath, "gitops-")
 	if err != nil {
 		return "", nil, errors.WithMessage(err, "cannot get temporary directory")
 	}

@@ -5,7 +5,6 @@ import (
 	"encoding/base32"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"os/exec"
@@ -562,7 +561,7 @@ func stageCommitAndPush(repo *git.Repository, tmpPath string, user string, passw
 }
 
 func initRepo(scmURL string, repoName string) (*git.Repository, string, error) {
-	tmpPath, _ := ioutil.TempDir("", "gitops-")
+	tmpPath, _ := os.MkdirTemp("", "gitops-")
 	repo, err := git.PlainInit(tmpPath, false)
 	if err != nil {
 		return nil, tmpPath, fmt.Errorf("cannot init empty repo: %s", err)

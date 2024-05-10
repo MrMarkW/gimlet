@@ -3,7 +3,6 @@ package environment
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/signal"
 	"path/filepath"
@@ -67,7 +66,7 @@ func connect(c *cli.Context) error {
 		return err
 	}
 
-	tmpDir, err := ioutil.TempDir("/tmp", "gimlet")
+	tmpDir, err := os.MkdirTemp("/tmp", "gimlet")
 	if err != nil {
 		return err
 	}
@@ -87,7 +86,7 @@ func applyManifests(files map[string]string, filesPath string) {
 	for _, fileName := range sortedKeys {
 		content := files[fileName]
 		filePath := filepath.Join(filesPath, fileName)
-		err := ioutil.WriteFile(filePath, []byte(fmt.Sprintf("%v", content)), 0666)
+		err := os.WriteFile(filePath, []byte(fmt.Sprintf("%v", content)), 0666)
 		if err != nil {
 			panic(err)
 		}

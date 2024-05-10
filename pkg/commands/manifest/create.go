@@ -3,6 +3,7 @@ package manifest
 import (
 	"bytes"
 	"fmt"
+	"os"
 	"strings"
 
 	"github.com/gimlet-io/gimlet/pkg/dx"
@@ -13,8 +14,6 @@ import (
 	helmCLI "helm.sh/helm/v3/pkg/cli"
 	"helm.sh/helm/v3/pkg/helmpath"
 	"helm.sh/helm/v3/pkg/repo"
-
-	"io/ioutil"
 )
 
 var manifestCreateCmd = cli.Command{
@@ -68,7 +67,7 @@ func create(c *cli.Context) error {
 	valuesPath := c.String("file")
 	values := map[string]interface{}{}
 	if valuesPath != "" {
-		yamlString, err := ioutil.ReadFile(valuesPath)
+		yamlString, err := os.ReadFile(valuesPath)
 		if err != nil {
 			return fmt.Errorf("cannot read values file")
 		}
@@ -143,7 +142,7 @@ func create(c *cli.Context) error {
 
 	outputPath := c.String("output")
 	if outputPath != "" {
-		err := ioutil.WriteFile(outputPath, yamlString.Bytes(), 0666)
+		err := os.WriteFile(outputPath, yamlString.Bytes(), 0666)
 		if err != nil {
 			return fmt.Errorf("cannot write values file %s", err)
 		}

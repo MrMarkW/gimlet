@@ -3,7 +3,7 @@ package stack
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"os"
 
 	markdown "github.com/MichaelMure/go-term-markdown"
 	"github.com/enescakir/emoji"
@@ -96,7 +96,7 @@ func lockVersionIfNotLocked(stackConfig dx.StackConfig, stackConfigPath string) 
 			e.Encode(stackConfig)
 
 			updatedStackConfigString := "---\n" + updatedStackConfigBuffer.String()
-			err = ioutil.WriteFile(stackConfigPath, []byte(updatedStackConfigString), 0666)
+			err = os.WriteFile(stackConfigPath, []byte(updatedStackConfigString), 0666)
 			if err != nil {
 				return fmt.Errorf("cannot write stack file %s", err)
 			}

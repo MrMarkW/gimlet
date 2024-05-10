@@ -366,14 +366,14 @@ func Test_template(t *testing.T) {
 		assert.NoError(t, err)
 		defer os.Remove(templatedFile.Name())
 
-		ioutil.WriteFile(manifestFile.Name(), []byte(manifestWithRemoteHelmChart), commands.File_RW_RW_R)
+		os.WriteFile(manifestFile.Name(), []byte(manifestWithRemoteHelmChart), commands.File_RW_RW_R)
 		args := append(args, "-f", manifestFile.Name())
 		args = append(args, "-o", templatedFile.Name())
 
 		err = commands.Run(&Command, args)
 		assert.NoError(t, err)
 
-		templated, err := ioutil.ReadFile(templatedFile.Name())
+		templated, err := os.ReadFile(templatedFile.Name())
 		assert.NoError(t, err)
 		assert.True(t, strings.Contains(string(templated), "myapp:1.1.0"))
 	})
@@ -388,14 +388,14 @@ func Test_template(t *testing.T) {
 		assert.NoError(t, err)
 		defer os.Remove(templatedFile.Name())
 
-		ioutil.WriteFile(manifestFile.Name(), []byte(manifestWithPrivateGitRepoHTTPS), commands.File_RW_RW_R)
+		os.WriteFile(manifestFile.Name(), []byte(manifestWithPrivateGitRepoHTTPS), commands.File_RW_RW_R)
 		args := append(args, "-f", manifestFile.Name())
 		args = append(args, "-o", templatedFile.Name())
 
 		err = commands.Run(&Command, args)
 		assert.NoError(t, err)
 
-		templated, err := ioutil.ReadFile(templatedFile.Name())
+		templated, err := os.ReadFile(templatedFile.Name())
 		assert.NoError(t, err)
 		assert.True(t, strings.Contains(string(templated), "replicas: 10"))
 	})
@@ -410,14 +410,14 @@ func Test_template(t *testing.T) {
 		assert.NoError(t, err)
 		defer os.Remove(templatedFile.Name())
 
-		ioutil.WriteFile(manifestFile.Name(), []byte(manifestWithKustomizePatch), commands.File_RW_RW_R)
+		os.WriteFile(manifestFile.Name(), []byte(manifestWithKustomizePatch), commands.File_RW_RW_R)
 		args := append(args, "-f", manifestFile.Name())
 		args = append(args, "-o", templatedFile.Name())
 
 		err = commands.Run(&Command, args)
 		assert.NoError(t, err)
 
-		templated, err := ioutil.ReadFile(templatedFile.Name())
+		templated, err := os.ReadFile(templatedFile.Name())
 		assert.NoError(t, err)
 		assert.True(t, strings.Contains(string(templated), "mountPath: /azure-bucket"))
 	})
@@ -432,14 +432,14 @@ func Test_template(t *testing.T) {
 		assert.NoError(t, err)
 		defer os.Remove(templatedFile.Name())
 
-		ioutil.WriteFile(manifestFile.Name(), []byte(manifestWithKustomizeJsonPatch), commands.File_RW_RW_R)
+		os.WriteFile(manifestFile.Name(), []byte(manifestWithKustomizeJsonPatch), commands.File_RW_RW_R)
 		args := append(args, "-f", manifestFile.Name())
 		args = append(args, "-o", templatedFile.Name())
 
 		err = commands.Run(&Command, args)
 		assert.NoError(t, err)
 
-		templated, err := ioutil.ReadFile(templatedFile.Name())
+		templated, err := os.ReadFile(templatedFile.Name())
 		assert.NoError(t, err)
 		assert.True(t, strings.Contains(string(templated), "host: myapp.com"))
 	})
@@ -454,14 +454,14 @@ func Test_template(t *testing.T) {
 		assert.NoError(t, err)
 		defer os.Remove(templatedFile.Name())
 
-		ioutil.WriteFile(manifestFile.Name(), []byte(manifestWithChartAndRawYaml), commands.File_RW_RW_R)
+		os.WriteFile(manifestFile.Name(), []byte(manifestWithChartAndRawYaml), commands.File_RW_RW_R)
 		args := append(args, "-f", manifestFile.Name())
 		args = append(args, "-o", templatedFile.Name())
 
 		err = commands.Run(&Command, args)
 		assert.NoError(t, err)
 
-		templated, err := ioutil.ReadFile(templatedFile.Name())
+		templated, err := os.ReadFile(templatedFile.Name())
 		assert.NoError(t, err)
 		assert.True(t, strings.Contains(string(templated), "type: LoadBalancer"))
 		assert.True(t, strings.Contains(string(templated), "app.kubernetes.io/managed-by: Helm"))
@@ -477,14 +477,14 @@ func Test_template(t *testing.T) {
 		assert.NoError(t, err)
 		defer os.Remove(templatedFile.Name())
 
-		ioutil.WriteFile(manifestFile.Name(), []byte(manifestWithRawYamlandPatch), commands.File_RW_RW_R)
+		os.WriteFile(manifestFile.Name(), []byte(manifestWithRawYamlandPatch), commands.File_RW_RW_R)
 		args := append(args, "-f", manifestFile.Name())
 		args = append(args, "-o", templatedFile.Name())
 
 		err = commands.Run(&Command, args)
 		assert.NoError(t, err)
 
-		templated, err := ioutil.ReadFile(templatedFile.Name())
+		templated, err := os.ReadFile(templatedFile.Name())
 		assert.NoError(t, err)
 		assert.True(t, strings.Contains(string(templated), "mountPath: /azure-bucket"))
 	})
@@ -499,14 +499,14 @@ func Test_template(t *testing.T) {
 		assert.NoError(t, err)
 		defer os.Remove(templatedFile.Name())
 
-		ioutil.WriteFile(manifestFile.Name(), []byte(manifestwithRaWYaml), commands.File_RW_RW_R)
+		os.WriteFile(manifestFile.Name(), []byte(manifestwithRaWYaml), commands.File_RW_RW_R)
 		args := append(args, "-f", manifestFile.Name())
 		args = append(args, "-o", templatedFile.Name())
 
 		err = commands.Run(&Command, args)
 		assert.NoError(t, err)
 
-		templated, err := ioutil.ReadFile(templatedFile.Name())
+		templated, err := os.ReadFile(templatedFile.Name())
 		assert.NoError(t, err)
 		assert.True(t, strings.Contains(string(templated), "secretName: tls-myapp"))
 	})
@@ -521,14 +521,14 @@ func Test_template(t *testing.T) {
 		assert.NoError(t, err)
 		defer os.Remove(templatedFile.Name())
 
-		ioutil.WriteFile(manifestFile.Name(), []byte(cueTemplate), commands.File_RW_RW_R)
+		os.WriteFile(manifestFile.Name(), []byte(cueTemplate), commands.File_RW_RW_R)
 		args := append(args, "-f", manifestFile.Name())
 		args = append(args, "-o", templatedFile.Name())
 
 		err = commands.Run(&Command, args)
 		assert.NoError(t, err)
 
-		templated, err := ioutil.ReadFile(templatedFile.Name())
+		templated, err := os.ReadFile(templatedFile.Name())
 		assert.NoError(t, err)
 		assert.True(t, strings.Contains(string(templated), "myapp-first"))
 		assert.True(t, strings.Contains(string(templated), "myapp-second"))

@@ -30,7 +30,7 @@ func Test_create(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		manifestString, err := ioutil.ReadFile(createdManifestPath.Name())
+		manifestString, err := os.ReadFile(createdManifestPath.Name())
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -63,7 +63,7 @@ func Test_create(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		manifestString, err := ioutil.ReadFile(createdManifestPath.Name())
+		manifestString, err := os.ReadFile(createdManifestPath.Name())
 		if err != nil {
 			t.Fatal(err)
 		}

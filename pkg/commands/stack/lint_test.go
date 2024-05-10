@@ -40,14 +40,14 @@ func TestLint(t *testing.T) {
 	args = append(args, "-c", stackFile.Name())
 
 	t.Run("Should parse a valid stack file", func(t *testing.T) {
-		ioutil.WriteFile(stackFile.Name(), []byte(valid), commands.File_RW_RW_R)
+		os.WriteFile(stackFile.Name(), []byte(valid), commands.File_RW_RW_R)
 		defer os.Remove(stackFile.Name())
 		err = commands.Run(&LintCmd, args)
 		assert.NoError(t, err)
 	})
 
 	t.Run("Should fail on parse error", func(t *testing.T) {
-		ioutil.WriteFile(stackFile.Name(), []byte(invalidFieldType), commands.File_RW_RW_R)
+		os.WriteFile(stackFile.Name(), []byte(invalidFieldType), commands.File_RW_RW_R)
 		defer os.Remove(stackFile.Name())
 		err = commands.Run(&LintCmd, args)
 		assert.Error(t, err)

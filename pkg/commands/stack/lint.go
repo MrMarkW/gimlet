@@ -3,7 +3,7 @@ package stack
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strings"
 
 	"github.com/gimlet-io/gimlet/pkg/dx"
@@ -32,7 +32,7 @@ func lint(c *cli.Context) error {
 	if stackConfigPath == "" {
 		stackConfigPath = "stack.yaml"
 	}
-	stackConfigYaml, err := ioutil.ReadFile(stackConfigPath)
+	stackConfigYaml, err := os.ReadFile(stackConfigPath)
 	if err != nil {
 		return fmt.Errorf("cannot read stack config file: %s", err.Error())
 	}

@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -243,7 +242,7 @@ func (r *BranchDeleteEventWorker) clone(repoName string) error {
 }
 
 func copyRepo(repoPath string) (*git.Repository, error, string) {
-	tmpPath, err := ioutil.TempDir("", "gitops-")
+	tmpPath, err := os.MkdirTemp("", "gitops-")
 	if err != nil {
 		return nil, err, ""
 	}

@@ -224,7 +224,7 @@ func loadStackFromFS(root string) (map[string]string, error) {
 			return nil
 		}
 
-		content, err := ioutil.ReadFile(filepath.Join(root, path))
+		content, err := os.ReadFile(filepath.Join(root, path))
 		if err != nil {
 			return fmt.Errorf("cannot get file: %s", err)
 		}

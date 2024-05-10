@@ -50,7 +50,7 @@ func InputFiles(file string) (map[string]string, error) {
 				return files, err
 			}
 			for _, f := range dir {
-				contents, err := ioutil.ReadFile(filepath.Join(file, f.Name()))
+				contents, err := os.ReadFile(filepath.Join(file, f.Name()))
 				if err != nil {
 					return files, err
 				}
@@ -58,7 +58,7 @@ func InputFiles(file string) (map[string]string, error) {
 			}
 			return files, nil
 		} else {
-			contents, err := ioutil.ReadFile(file)
+			contents, err := os.ReadFile(file)
 			if err != nil {
 				return files, err
 			}

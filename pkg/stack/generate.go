@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -49,7 +48,7 @@ func GenerateAndWriteFiles(stackConfig dx.StackConfig, targetDir string) error {
 }
 
 func ReadStackConfig(stackConfigPath string) (dx.StackConfig, error) {
-	stackConfigYaml, err := ioutil.ReadFile(stackConfigPath)
+	stackConfigYaml, err := os.ReadFile(stackConfigPath)
 	if err != nil {
 		return dx.StackConfig{}, fmt.Errorf("cannot read stack config file: %s", err.Error())
 	}
@@ -108,7 +107,7 @@ func writeFilesAndPreserveCustomChanges(
 		if err != nil {
 			return fmt.Errorf("cannot write stack: %s", err.Error())
 		}
-		err = ioutil.WriteFile(physicalPath, []byte(mergedString), 0664)
+		err = os.WriteFile(physicalPath, []byte(mergedString), 0664)
 		if err != nil {
 			return fmt.Errorf("cannot write stack: %s", err.Error())
 		}
@@ -146,5 +145,5 @@ func WriteStackConfig(stackConfig dx.StackConfig, stackConfigPath string) error 
 	e.Encode(stackConfig)
 
 	updatedStackConfigString := "---\n" + updatedStackConfigBuffer.String()
-	return ioutil.WriteFile(stackConfigPath, []byte(updatedStackConfigString), 0666)
+	return os.WriteFile(stackConfigPath, []byte(updatedStackConfigString), 0666)
 }

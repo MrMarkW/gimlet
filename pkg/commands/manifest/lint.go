@@ -3,7 +3,6 @@ package manifest
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
 
@@ -33,7 +32,7 @@ var manifestLintCmd = cli.Command{
 
 func lint(c *cli.Context) error {
 	envFile := c.String("file")
-	envString, err := ioutil.ReadFile(envFile)
+	envString, err := os.ReadFile(envFile)
 	if err != nil {
 		return fmt.Errorf("cannot read file %s", err)
 	}

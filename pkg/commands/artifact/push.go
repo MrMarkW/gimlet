@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"os"
 
 	"github.com/gimlet-io/gimlet/pkg/client"
 	"github.com/gimlet-io/gimlet/pkg/dx"
@@ -48,7 +48,7 @@ var artifactPushCmd = cli.Command{
 }
 
 func push(c *cli.Context) error {
-	content, err := ioutil.ReadFile(c.String("file"))
+	content, err := os.ReadFile(c.String("file"))
 	if err != nil {
 		return fmt.Errorf("cannot read file %s", err)
 	}

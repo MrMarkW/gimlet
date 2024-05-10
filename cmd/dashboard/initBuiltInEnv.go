@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"encoding/base32"
 	"fmt"
-	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"os"
@@ -135,7 +134,7 @@ func bootstrapBuiltInEnv(
 }
 
 func initRepo(url string) (*git.Repository, string, error) {
-	tmpPath, _ := ioutil.TempDir("", "gitops-")
+	tmpPath, _ := os.MkdirTemp("", "gitops-")
 	repo, err := git.PlainInit(tmpPath, false)
 	if err != nil {
 		return nil, tmpPath, fmt.Errorf("cannot init empty repo: %s", err)

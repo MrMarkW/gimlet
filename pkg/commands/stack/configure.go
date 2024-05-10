@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"os"
@@ -63,7 +62,7 @@ func configure(c *cli.Context) error {
 	}
 
 	if _, err := os.Stat(absolutePath); err == nil {
-		stackConfigYaml, err := ioutil.ReadFile(stackConfigPath)
+		stackConfigYaml, err := os.ReadFile(stackConfigPath)
 		if err != nil {
 			return fmt.Errorf("cannot read stack config file: %s", err.Error())
 		}
@@ -97,7 +96,7 @@ func configure(c *cli.Context) error {
 	var stackDefinitionYaml string
 
 	if c.String("stack-definition") != "" {
-		stackDefinitionYamlBytes, err := ioutil.ReadFile(c.String("stack-definition"))
+		stackDefinitionYamlBytes, err := os.ReadFile(c.String("stack-definition"))
 		if err != nil {
 			return fmt.Errorf("cannot read stack definition file: %s", err.Error())
 		}
@@ -127,7 +126,7 @@ func configure(c *cli.Context) error {
 		e.Encode(updatedStackConfig)
 
 		updatedStackConfigString := "---\n" + updatedStackConfigBuffer.String()
-		err = ioutil.WriteFile(stackConfigPath, []byte(updatedStackConfigString), 0666)
+		err = os.WriteFile(stackConfigPath, []byte(updatedStackConfigString), 0666)
 		if err != nil {
 			return fmt.Errorf("cannot write stack file %s", err)
 		}
@@ -164,7 +163,7 @@ func Configure(stackDefinition dx.StackDefinition, existingStackConfig dx.StackC
 
 	port := randomPort()
 
-	workDir, err := ioutil.TempDir(os.TempDir(), "gimlet")
+	workDir, err := os.MkdirTemp(os.TempDir(), "gimlet")
 	if err != nil {
 		panic(err)
 	}
@@ -205,11 +204,11 @@ func randomPort() int {
 }
 
 func writeTempFiles(workDir string, stackDefinition string, stackJson string) {
-	ioutil.WriteFile(filepath.Join(workDir, "stack-definition.json"), []byte(stackDefinition), 0666)
-	ioutil.WriteFile(filepath.Join(workDir, "stack.json"), []byte(stackJson), 0666)
-	ioutil.WriteFile(filepath.Join(workDir, "bundle.js"), web.BundleJs, 0666)
-	ioutil.WriteFile(filepath.Join(workDir, "bundle.js.LICENSE.txt"), web.LicenseTxt, 0666)
-	ioutil.WriteFile(filepath.Join(workDir, "index.html"), web.IndexHtml, 0666)
+	os.WriteFile(filepath.Join(workDir, "stack-definition.json"), []byte(stackDefinition), 0666)
+	os.WriteFile(filepath.Join(workDir, "stack.json"), []byte(stackJson), 0666)
+	os.WriteFile(filepath.Join(workDir, "bundle.js"), web.BundleJs, 0666)
+	os.WriteFile(filepath.Join(workDir, "bundle.js.LICENSE.txt"), web.LicenseTxt, 0666)
+	os.WriteFile(filepath.Join(workDir, "index.html"), web.IndexHtml, 0666)
 }
 
 func removeTempFiles(workDir string) {

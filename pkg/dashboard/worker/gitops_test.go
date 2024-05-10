@@ -17,7 +17,6 @@ package worker
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"testing"
 
@@ -412,7 +411,7 @@ cleanup:
 }
 
 func Test_revertTo(t *testing.T) {
-	path, _ := ioutil.TempDir("", "gitops-")
+	path, _ := os.MkdirTemp("", "gitops-")
 	defer os.RemoveAll(path)
 
 	repo, _ := git.PlainInit(path, false)
@@ -565,7 +564,7 @@ func Test_cleanupTrigger(t *testing.T) {
 }
 
 func Test_kustomizationTemplateAndWrite(t *testing.T) {
-	dirToWrite, err := ioutil.TempDir("/tmp", "gimlet")
+	dirToWrite, err := os.MkdirTemp("/tmp", "gimlet")
 	defer os.RemoveAll(dirToWrite)
 	if err != nil {
 		t.Errorf("Cannot create directory")

@@ -57,3 +57,8 @@ cmd/installer/web/asset-manifest.json
 
 web/dashboard/coverage/
 cmd/dashboard/git-root/
+.gimlet/cluster.env
+.gimlet/crds.yaml
+.gimlet/it.yaml
+.gimlet/temp-output.yaml
+.vscode/launch-local.json

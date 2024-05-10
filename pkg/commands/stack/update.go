@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"os"
 
 	markdown "github.com/MichaelMure/go-term-markdown"
 	"github.com/enescakir/emoji"
@@ -40,7 +40,7 @@ func update(c *cli.Context) error {
 	if stackConfigPath == "" {
 		stackConfigPath = "stack.yaml"
 	}
-	stackConfigYaml, err := ioutil.ReadFile(stackConfigPath)
+	stackConfigYaml, err := os.ReadFile(stackConfigPath)
 	if err != nil {
 		return fmt.Errorf("cannot read stack config file: %s", err.Error())
 	}

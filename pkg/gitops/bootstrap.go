@@ -2,7 +2,6 @@ package gitops
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
@@ -156,7 +155,7 @@ func GenerateManifests(opts ManifestOpts) (string, string, string, error) {
 			if err != nil {
 				return "", "", "", fmt.Errorf("cannot create dependencies folder %s", err)
 			}
-			err = ioutil.WriteFile(path.Join(opts.GitopsRepoPath, opts.Env, "dependencies", ".sourceignore"), []byte(""), os.ModePerm)
+			err = os.WriteFile(path.Join(opts.GitopsRepoPath, opts.Env, "dependencies", ".sourceignore"), []byte(""), os.ModePerm)
 			if err != nil {
 				return "", "", "", fmt.Errorf("cannot populate dependencies folder %s", err)
 			}
@@ -168,7 +167,7 @@ func GenerateManifests(opts ManifestOpts) (string, string, string, error) {
 			if err != nil {
 				return "", "", "", fmt.Errorf("cannot generate deploy key %s", err)
 			}
-			err = ioutil.WriteFile(path.Join(opts.GitopsRepoPath, opts.Env, "flux", secretFileName), deployKeySecret, os.ModePerm)
+			err = os.WriteFile(path.Join(opts.GitopsRepoPath, opts.Env, "flux", secretFileName), deployKeySecret, os.ModePerm)
 			if err != nil {
 				return "", "", "", fmt.Errorf("cannot write deploy key %s", err)
 			}
@@ -179,7 +178,7 @@ func GenerateManifests(opts ManifestOpts) (string, string, string, error) {
 			if err != nil {
 				return "", "", "", fmt.Errorf("cannot generate deploy key %s", err)
 			}
-			err = ioutil.WriteFile(path.Join(opts.GitopsRepoPath, opts.Env, "flux", secretFileName), basicAuthSecret, os.ModePerm)
+			err = os.WriteFile(path.Join(opts.GitopsRepoPath, opts.Env, "flux", secretFileName), basicAuthSecret, os.ModePerm)
 			if err != nil {
 				return "", "", "", fmt.Errorf("cannot write basic auth secret %s", err)
 			}

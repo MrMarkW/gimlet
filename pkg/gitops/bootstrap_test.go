@@ -1,7 +1,6 @@
 package gitops
 
 import (
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -24,7 +23,7 @@ func Test_parseRepoURL(t *testing.T) {
 }
 
 func Test_generateManifestWithoutControllerWithoutSingleEnv(t *testing.T) {
-	dirToWrite, err := ioutil.TempDir("/tmp", "gimlet")
+	dirToWrite, err := os.MkdirTemp("/tmp", "gimlet")
 	defer os.RemoveAll(dirToWrite)
 	if err != nil {
 		t.Errorf("Cannot create directory")
@@ -61,7 +60,7 @@ func Test_generateManifestWithoutControllerWithoutSingleEnv(t *testing.T) {
 }
 
 func Test_generateManifestWithoutControllerWithSingleEnv(t *testing.T) {
-	dirToWrite, err := ioutil.TempDir("/tmp", "gimlet")
+	dirToWrite, err := os.MkdirTemp("/tmp", "gimlet")
 	defer os.RemoveAll(dirToWrite)
 	if err != nil {
 		t.Errorf("Cannot create directory")
@@ -96,7 +95,7 @@ func Test_generateManifestWithoutControllerWithSingleEnv(t *testing.T) {
 }
 
 func Test_generateManifestWithController(t *testing.T) {
-	dirToWrite, err := ioutil.TempDir("/tmp", "gimlet")
+	dirToWrite, err := os.MkdirTemp("/tmp", "gimlet")
 	defer os.RemoveAll(dirToWrite)
 	if err != nil {
 		t.Errorf("Cannot create directory")
@@ -122,7 +121,7 @@ func Test_generateManifestWithController(t *testing.T) {
 }
 
 func Test_generateManifestWithoutKustomizationAndRepoWithoutDeployKey(t *testing.T) {
-	dirToWrite, err := ioutil.TempDir("/tmp", "gimlet")
+	dirToWrite, err := os.MkdirTemp("/tmp", "gimlet")
 	defer os.RemoveAll(dirToWrite)
 	if err != nil {
 		t.Errorf("Cannot create directory")
@@ -153,7 +152,7 @@ func Test_generateManifestWithoutKustomizationAndRepoWithoutDeployKey(t *testing
 }
 
 func Test_generateManifestWithKustomizationAndRepoWithoutDeployKey(t *testing.T) {
-	dirToWrite, err := ioutil.TempDir("/tmp", "gimlet")
+	dirToWrite, err := os.MkdirTemp("/tmp", "gimlet")
 	defer os.RemoveAll(dirToWrite)
 	if err != nil {
 		t.Errorf("Cannot create directory")
@@ -183,7 +182,7 @@ func Test_generateManifestWithKustomizationAndRepoWithoutDeployKey(t *testing.T)
 }
 
 func Test_generateManifestProviderAndAlert(t *testing.T) {
-	dirToWrite, err := ioutil.TempDir("/tmp", "gimlet")
+	dirToWrite, err := os.MkdirTemp("/tmp", "gimlet")
 	defer os.RemoveAll(dirToWrite)
 	if err != nil {
 		t.Errorf("Cannot create directory")

@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"io"
-	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -230,7 +230,7 @@ func imageBuildMeta(w http.ResponseWriter, r *http.Request) {
 
 	tarFileName := imageBuildRequest.SourcePath
 
-	data, err := ioutil.ReadFile(tarFileName)
+	data, err := os.ReadFile(tarFileName)
 	if err != nil {
 		logrus.Errorf("cannot read file: %s", err)
 		http.Error(w, http.StatusText(400), 400)

@@ -3,7 +3,6 @@ package manifest
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
 
@@ -58,7 +57,7 @@ type manifestValues struct {
 
 func configure(c *cli.Context) error {
 	manifestPath := c.String("file")
-	manifestString, err := ioutil.ReadFile(manifestPath)
+	manifestString, err := os.ReadFile(manifestPath)
 	if err != nil && !strings.Contains(err.Error(), "no such file or directory") {
 		return fmt.Errorf("cannot read manifest file")
 	}
@@ -108,14 +107,14 @@ func configure(c *cli.Context) error {
 
 	var debugSchema, debugUISchema string
 	if c.String("schema") != "" {
-		debugSchemaBytes, err := ioutil.ReadFile(c.String("schema"))
+		debugSchemaBytes, err := os.ReadFile(c.String("schema"))
 		if err != nil {
 			return fmt.Errorf("cannot read debugSchema file")
 		}
 		debugSchema = string(debugSchemaBytes)
 	}
 	if c.String("ui-schema") != "" {
-		debugUISchemaBytes, err := ioutil.ReadFile(c.String("ui-schema"))
+		debugUISchemaBytes, err := os.ReadFile(c.String("ui-schema"))
 		if err != nil {
 			return fmt.Errorf("cannot read debugUISchema file")
 		}
@@ -146,7 +145,7 @@ func configure(c *cli.Context) error {
 		return fmt.Errorf("cannot marshal manifest")
 	}
 
-	err = ioutil.WriteFile(manifestPath, manifestString, 0666)
+	err = os.WriteFile(manifestPath, manifestString, 0666)
 	if err != nil {
 		return fmt.Errorf("cannot write values file %s", err)
 	}

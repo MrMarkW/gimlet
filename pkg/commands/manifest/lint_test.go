@@ -58,7 +58,7 @@ func Test_lint(t *testing.T) {
 			t.Fatal(err)
 		}
 		defer os.Remove(envFile.Name())
-		ioutil.WriteFile(envFile.Name(), []byte(validEnv), commands.File_RW_RW_R)
+		os.WriteFile(envFile.Name(), []byte(validEnv), commands.File_RW_RW_R)
 
 		args := strings.Split("gimlet manifest lint", " ")
 		args = append(args, "-f", envFile.Name())
@@ -75,7 +75,7 @@ func Test_lint(t *testing.T) {
 			t.Fatal(err)
 		}
 		defer os.Remove(envFile.Name())
-		ioutil.WriteFile(envFile.Name(), []byte(invalidEnv), commands.File_RW_RW_R)
+		os.WriteFile(envFile.Name(), []byte(invalidEnv), commands.File_RW_RW_R)
 
 		args := strings.Split("gimlet manifest lint", " ")
 		args = append(args, "-f", envFile.Name())
@@ -92,7 +92,7 @@ func Test_lint(t *testing.T) {
 			t.Fatal(err)
 		}
 		defer os.Remove(envFile.Name())
-		ioutil.WriteFile(envFile.Name(), []byte(invalidReplicaType), commands.File_RW_RW_R)
+		os.WriteFile(envFile.Name(), []byte(invalidReplicaType), commands.File_RW_RW_R)
 
 		args := strings.Split("gimlet manifest lint", " ")
 		args = append(args, "-f", envFile.Name())

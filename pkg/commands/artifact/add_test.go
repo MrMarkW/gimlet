@@ -54,21 +54,21 @@ func Test_add(t *testing.T) {
 		t.Fatalf("Error creating artifact file: %s", err)
 	}
 	defer os.Remove(artifactFile.Name())
-	ioutil.WriteFile(artifactFile.Name(), []byte(artifactToExtend), commands.File_RW_RW_R)
+	os.WriteFile(artifactFile.Name(), []byte(artifactToExtend), commands.File_RW_RW_R)
 
 	envFile, err := ioutil.TempFile("", "gimlet-cli-test")
 	if err != nil {
 		t.Fatalf("Error creating env file: %s", err)
 	}
 	defer os.Remove(envFile.Name())
-	ioutil.WriteFile(envFile.Name(), []byte(env), commands.File_RW_RW_R)
+	os.WriteFile(envFile.Name(), []byte(env), commands.File_RW_RW_R)
 
 	envFile2, err := ioutil.TempFile("", "gimlet-cli-test")
 	if err != nil {
 		t.Fatalf("Error creating env file 2: %s", err)
 	}
 	defer os.Remove(envFile2.Name())
-	ioutil.WriteFile(envFile2.Name(), []byte(env), commands.File_RW_RW_R)
+	os.WriteFile(envFile2.Name(), []byte(env), commands.File_RW_RW_R)
 
 	t.Run("Should add CI URL to artifact", func(t *testing.T) {
 		args := strings.Split("gimlet artifact add", " ")
@@ -79,7 +79,7 @@ func Test_add(t *testing.T) {
 			t.Fatalf("Error adding CI URL: %s", err)
 		}
 
-		content, err := ioutil.ReadFile(artifactFile.Name())
+		content, err := os.ReadFile(artifactFile.Name())
 		if err != nil {
 			t.Fatalf("Error reading file: %s", err)
 		}
@@ -145,7 +145,7 @@ func Test_add(t *testing.T) {
 			t.Fatalf("Error appending custom field: %s", err)
 		}
 
-		content, err := ioutil.ReadFile(artifactFile.Name())
+		content, err := os.ReadFile(artifactFile.Name())
 		if err != nil {
 			t.Fatalf("Error reading file: %s", err)
 		}
@@ -180,7 +180,7 @@ func Test_add(t *testing.T) {
 			t.Fatalf("Error: %s", err)
 		}
 
-		content, err := ioutil.ReadFile(artifactFile.Name())
+		content, err := os.ReadFile(artifactFile.Name())
 		if err != nil {
 			t.Fatalf("Error reading file: %s", err)
 		}
@@ -230,7 +230,7 @@ func Test_add(t *testing.T) {
 			t.Fatalf("Error: %s", err)
 		}
 
-		content, err := ioutil.ReadFile(artifactFile.Name())
+		content, err := os.ReadFile(artifactFile.Name())
 		if err != nil {
 			t.Fatalf("Error reading file: %s", err)
 		}
@@ -258,7 +258,7 @@ func Test_add(t *testing.T) {
 			t.Fatalf("Error: %s", err)
 		}
 
-		content, err := ioutil.ReadFile(artifactFile.Name())
+		content, err := os.ReadFile(artifactFile.Name())
 		if err != nil {
 			t.Fatalf("Error reading file: %s", err)
 		}
@@ -293,7 +293,7 @@ func Test_add(t *testing.T) {
 			t.Fatalf("Error: %s", err)
 		}
 
-		content, err := ioutil.ReadFile(artifactFile.Name())
+		content, err := os.ReadFile(artifactFile.Name())
 		if err != nil {
 			t.Fatalf("Error reading file: %s", err)
 		}
@@ -316,7 +316,7 @@ func Test_add(t *testing.T) {
 			t.Fatalf("Error: %s", err)
 		}
 
-		content, err := ioutil.ReadFile(artifactFile.Name())
+		content, err := os.ReadFile(artifactFile.Name())
 		if err != nil {
 			t.Fatalf("Error reading file: %s", err)
 		}

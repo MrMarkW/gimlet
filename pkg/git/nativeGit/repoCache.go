@@ -3,7 +3,6 @@ package nativeGit
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -279,7 +278,7 @@ func (r *RepoCache) InstanceForWriteWithHistory(repoName string) (*git.Repositor
 }
 
 func (r *RepoCache) instanceForWrite(repoName string, withHistory bool) (*git.Repository, string, error) {
-	tmpPath, err := ioutil.TempDir("", "gitops-")
+	tmpPath, err := os.MkdirTemp("", "gitops-")
 	if err != nil {
 		errors.WithMessage(err, "couldn't get temporary directory")
 	}

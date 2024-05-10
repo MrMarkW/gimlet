@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strings"
 
 	"github.com/gimlet-io/gimlet/pkg/dx"
@@ -47,7 +47,7 @@ var artifactAddCmd = cli.Command{
 }
 
 func add(c *cli.Context) error {
-	content, err := ioutil.ReadFile(c.String("file"))
+	content, err := os.ReadFile(c.String("file"))
 	if err != nil {
 		return fmt.Errorf("cannot read file %s", err)
 	}
@@ -76,7 +76,7 @@ func add(c *cli.Context) error {
 	envFiles := c.StringSlice("envFile")
 	envs := []*dx.Manifest{}
 	for _, envFile := range envFiles {
-		envString, err := ioutil.ReadFile(envFile)
+		envString, err := os.ReadFile(envFile)
 		if err != nil {
 			return fmt.Errorf("cannot read file %s", err)
 		}
@@ -124,7 +124,7 @@ func add(c *cli.Context) error {
 	e.SetIndent("", "  ")
 	e.Encode(a)
 
-	err = ioutil.WriteFile(c.String("file"), jsonString.Bytes(), 0666)
+	err = os.WriteFile(c.String("file"), jsonString.Bytes(), 0666)
 	if err != nil {
 		return fmt.Errorf("cannot write artifact json %s", err)
 	}

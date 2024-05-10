@@ -35,7 +35,7 @@ func Test_template_private_chart(t *testing.T) {
 		}
 		defer os.Remove(templatedFile.Name())
 
-		ioutil.WriteFile(manifestFile.Name(), []byte(manifestWithPrivateGitRepo), commands.File_RW_RW_R)
+		os.WriteFile(manifestFile.Name(), []byte(manifestWithPrivateGitRepo), commands.File_RW_RW_R)
 
 		args := strings.Split("gimlet manifest template private chart", " ")
 		args = append(args, "-f", manifestFile.Name())
@@ -46,7 +46,7 @@ func Test_template_private_chart(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		templated, err := ioutil.ReadFile(templatedFile.Name())
+		templated, err := os.ReadFile(templatedFile.Name())
 		if err != nil {
 			t.Fatal(err)
 		}
